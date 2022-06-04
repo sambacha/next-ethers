@@ -1,6 +1,9 @@
+/**
+ * @implements ErrorEthers
+ * 
+ * 
+ */
 
-//export type TransactionReceipt {
-//}
 
 export type ErrorSignature = {
     r: string;
@@ -11,7 +14,7 @@ export type ErrorSignature = {
 
 export type ErrorAccessList = Array<{ address: string, storageKeys: Array<string> }>;
 
-/*
+
 export interface ErrorTransaction {
     type?: number;
 
@@ -36,7 +39,7 @@ export interface ErrorTransaction {
 
     accessList?: ErrorAccessList;
 }
-*/
+
 
 export interface ErrorFetchRequestWithBody extends ErrorFetchRequest {
     body: Readonly<Uint8Array>;
@@ -88,7 +91,7 @@ export type ErrorCode =
 
 export interface EthersError<T extends ErrorCode = ErrorCode> extends Error {
     code: ErrorCode;
-//    recover?: (...args: Array<any>) => any;
+    recover?: (...args: Array<any>) => any;
     info?: Record<string, any>;
     error?: Error;
 }
@@ -160,11 +163,6 @@ export interface UnexpectedArgumentError extends EthersError<"UNEXPECTED_ARGUMEN
     expectedCount: number;
 }
 
-//export interface ValueMismatchError extends EthersError<ErrorCode.UNEXPECTED_ARGUMENT> {
-//    count: number;
-//    expectedCount: number;
-//}
-
 
 // Blockchain Errors
 
@@ -228,6 +226,7 @@ export interface UnpredictableGasLimitError extends EthersError<"UNPREDICTABLE_G
 
 // Coding; converts an ErrorCode its Typed Error
 
+// prettier-ignore
 export type CodedEthersError<T> =
     T extends "UNKNOWN_ERROR" ? UnknownError:
     T extends "NOT_IMPLEMENTED" ? NotImplementedError:
@@ -255,15 +254,7 @@ export type CodedEthersError<T> =
 
     never;
 
-/**
- *  try {
- *      // code....
- *  } catch (e) {
- *      if (isError(e, errors.CALL_EXCEPTION)) {
- *          console.log(e.data);
- *      }
- *  }
- */
+
 export function isError<K extends ErrorCode, T extends CodedEthersError<K>>(error: any, code: K): error is T {
     return (error && (<EthersError>error).code === code);
 }

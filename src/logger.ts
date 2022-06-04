@@ -1,4 +1,4 @@
-import { ErrorCode } from "./errors.js";
+import type { ErrorCode } from "./errors.js";
 
 import type { CodedEthersError } from "./errors.js";
 
@@ -237,6 +237,7 @@ export class Logger {
                     this.throwArgumentError(`invalid numeric string: ${ e.message }`, name || "value", value);
                 }
         }
+         // @ts-expect-error
         return this.throwArgumentError("invalid numeric value", name || "value", value);
     }
 
@@ -257,6 +258,7 @@ export class Logger {
                     this.throwArgumentError(`invalid BigNumberish string: ${ e.message }`, name || "value", value);
                 }
         }
+        // @ts-expect-error
         return this.throwArgumentError("invalid BigNumberish value", name || "value", value);
     }
 

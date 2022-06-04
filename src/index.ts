@@ -1,11 +1,12 @@
 export {
-  ErrorCode,
+//  ErrorCode,
 
   isError,
   isCallException,
 //  isContractCallException
 } from "./errors.js";
 
+export type { ErrorCode } from "./errors.js";
 export { Logger } from "./logger.js";
 
 // Types
